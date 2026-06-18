@@ -861,6 +861,7 @@ Return only the post text.`;
   try{
     const res = await fetch("https://phoenixinfin.com/api/desk",{
       method:"POST",
+      credentials:"include",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({type:"hook",prompt})
     });
@@ -958,6 +959,7 @@ async function askDesk(q){
   try{
     const res = await fetch("https://phoenixinfin.com/api/desk",{
       method:"POST",
+      credentials:"include",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({type:"chat",system:DESK_SYSTEM,messages:convo})
     });
@@ -1036,7 +1038,7 @@ async function captureLead(kind){
   if(pwctaBtn){ pwctaBtn.textContent='Redirecting to payment...'; pwctaBtn.disabled=true; }
 
   try{
-    const statusRes = await fetch('/api/desk/status');
+    const statusRes = await fetch('https://phoenixinfin.com/api/desk/status', {credentials:'include'});
     const statusData = await statusRes.json();
 
     if(!statusData.authenticated){
@@ -1044,7 +1046,7 @@ async function captureLead(kind){
       return;
     }
 
-    const createRes = await fetch('/api/desk-pay/create',{
+    const createRes = await fetch('https://phoenixinfin.com/api/desk-pay/create',{credentials:'include',
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({tier: plan})
@@ -1083,7 +1085,7 @@ async function markSeen(code){
   try{ const s=localStorage.getItem('pr-seen'); if(s) seen=new Set(JSON.parse(s)); }catch(e){}
   updateProgress();
   try{
-    const res=await fetch('/api/desk/status');
+    const res=await fetch('https://phoenixinfin.com/api/desk/status',{credentials:'include'});
     if(res.ok){
       const d=await res.json();
       if(d.authenticated && d.tier!=='free' && !d.expired){
