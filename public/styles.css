@@ -356,6 +356,68 @@ p { margin: 0 0 1rem; }
 .tool h4 { margin-bottom: 6px; }
 .tool p { color: var(--muted); font-size: .9rem; margin: 0; }
 
+/* Phoenix Rising banner */
+.rising-banner {
+  background: #1A1611;
+  padding: 64px 0;
+}
+.rising-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.rising-label {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #BE3220;
+  margin-bottom: .6rem;
+  font-family: 'Inter', sans-serif;
+}
+.rising-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: #E7E0D0;
+  margin: 0 0 .5em;
+  line-height: 1.1;
+}
+.rising-title em { color: #BE3220; font-style: normal; }
+.rising-copy p { color: #B6AC93; font-size: 1rem; margin: 0; max-width: 520px; }
+.btn-rising {
+  flex-shrink: 0;
+  background: #BE3220;
+  color: #E7E0D0;
+  border-radius: 3px;
+  font-family: 'Inter', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  padding: 14px 26px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .15s;
+}
+.btn-rising:hover { background: #9e2a1a; color: #E7E0D0; }
+@media (max-width: 640px) {
+  .rising-inner { flex-direction: column; align-items: flex-start; }
+  .btn-rising { width: 100%; text-align: center; }
+}
+
+/* What to Expect cards */
+.expect-card { display: flex; flex-direction: column; gap: 14px; }
+.expect-icon {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: rgba(232,93,4,.1);
+  color: var(--orange);
+}
+.expect-card h3 { margin: 0; font-size: 1.1rem; }
+.expect-card p { color: var(--muted); font-size: .95rem; margin: 0; }
+
 /* Testimonials */
 .testimonial {
   background: #fff;

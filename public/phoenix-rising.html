@@ -1,0 +1,1130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix Rising — What the industry doesn't put in the brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E0D0;
+    --paper-2:#DDD4C0;
+    --ink:#1A1611;
+    --ink-soft:#5B5444;
+    --redact:#14110C;
+    --stamp:#BE3220;
+    --flag:#C68A2A;
+    --line:#B6AC93;
+    --paper-card:#EFE9DC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(0,0,0,.04), transparent 40%),
+      radial-gradient(circle at 82% 78%, rgba(0,0,0,.05), transparent 45%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    color:var(--ink);
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    line-height:1.5;
+    min-height:100vh;
+    padding:0 0 80px;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    border-bottom:3px solid var(--ink);
+    padding:30px 0 18px;
+    margin-bottom:6px;
+    position:relative;
+  }
+  .top-strip{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);border-bottom:1px solid var(--line);
+    padding-bottom:8px;margin-bottom:18px;flex-wrap:wrap;gap:8px;
+  }
+  .stamp{
+    display:inline-block;border:2.5px solid var(--stamp);color:var(--stamp);
+    padding:3px 9px;font-weight:600;letter-spacing:.2em;border-radius:2px;
+    transform:rotate(-3deg);font-size:11px;
+  }
+  h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:clamp(34px,7vw,72px);
+    line-height:.92;letter-spacing:-.02em;text-transform:uppercase;
+  }
+  h1 .thin{display:block;font-size:.42em;letter-spacing:.04em;color:var(--ink-soft);margin-top:10px}
+  .dek{
+    font-family:'Spectral',serif;font-style:italic;font-size:clamp(15px,2.2vw,20px);
+    color:var(--ink-soft);max-width:640px;margin-top:14px;
+  }
+
+  /* ---------- controls ---------- */
+  .controls{
+    display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;
+    padding:22px 0 14px;border-bottom:1px solid var(--line);margin-bottom:26px;
+  }
+  .ctrl-group{display:flex;flex-direction:column;gap:7px}
+  .ctrl-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    background:transparent;border:1.5px solid var(--ink);color:var(--ink);
+    padding:7px 13px;cursor:pointer;letter-spacing:.04em;border-radius:2px;
+    transition:all .12s ease;
+  }
+  .chip:hover{background:var(--paper-2)}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .chip.v-health[aria-pressed="true"]{background:#2E5A4F;border-color:#2E5A4F}
+  .chip.v-life[aria-pressed="true"]{background:#5A3A6E;border-color:#5A3A6E}
+  .chip.v-finance[aria-pressed="true"]{background:#6B4E1E;border-color:#6B4E1E}
+  .search{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    background:var(--paper-card);border:1.5px solid var(--ink);color:var(--ink);
+    padding:9px 12px;min-width:210px;border-radius:2px;
+  }
+  .search::placeholder{color:var(--ink-soft)}
+  .search:focus,.chip:focus-visible,.search:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .count{margin-left:auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);align-self:center}
+
+  /* ---------- grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px}
+  .file{
+    background:var(--paper-card);border:1.5px solid var(--ink);
+    border-radius:3px;padding:0;display:flex;flex-direction:column;
+    box-shadow:3px 4px 0 rgba(26,22,17,.13);position:relative;overflow:hidden;
+  }
+  .file-head{padding:16px 18px 12px;border-bottom:1px dashed var(--line)}
+  .tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;gap:8px}
+  .vtag{
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    padding:3px 8px;border-radius:2px;color:#fff;white-space:nowrap;
+  }
+  .vtag.health{background:#2E5A4F}
+  .vtag.life{background:#5A3A6E}
+  .vtag.finance{background:#6B4E1E}
+  .caseno{font-size:10px;color:var(--ink-soft);letter-spacing:.1em}
+  .codename{font-family:'Archivo Black',sans-serif;font-size:19px;line-height:1.16;letter-spacing:-.01em;text-transform:none;margin-top:5px}
+
+  .meters{display:flex;gap:18px;padding:11px 18px;background:var(--paper-2);border-bottom:1px solid var(--line)}
+  .meter{flex:1}
+  .meter-label{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;display:flex;justify-content:space-between}
+  .pips{display:flex;gap:3px}
+  .pip{width:100%;height:7px;background:var(--line);border-radius:1px}
+  .pip.on-heat{background:var(--stamp)}
+  .pip.on-silence{background:var(--ink)}
+
+  .file-body{padding:15px 18px 18px;display:flex;flex-direction:column;gap:13px;flex:1}
+  .setup{font-family:'Spectral',serif;font-size:15px;line-height:1.45}
+
+  .redact-block{position:relative}
+  .redact-label{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stamp);font-weight:600;margin-bottom:6px}
+  .redact{
+    position:relative;font-size:13.5px;line-height:1.5;cursor:pointer;
+    border-left:3px solid var(--stamp);padding:9px 11px;background:rgba(190,50,32,.05);
+  }
+  .redact .truth{transition:opacity .35s ease;display:block}
+  .redact .bar{
+    position:absolute;inset:0;background:var(--redact);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--paper);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    transition:opacity .35s ease, transform .35s ease;cursor:pointer;
+  }
+  .redact .bar::after{content:"▸ TAP TO UNREDACT"}
+  .redact[data-open="true"] .bar{opacity:0;pointer-events:none;transform:translateX(6px)}
+  .redact[data-open="false"] .truth{opacity:0}
+
+  .ledger{display:flex;gap:10px;font-size:11.5px}
+  .ledger>div{flex:1;border:1px solid var(--line);border-radius:2px;padding:7px 9px}
+  .ledger .k{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+  .ledger .profits .k{color:#2E5A4F}
+  .ledger .pays .k{color:var(--stamp)}
+
+  .hooks{font-size:12.5px}
+  .hooks .k{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .hooks ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .hooks li{padding-left:14px;position:relative;line-height:1.4}
+  .hooks li::before{content:"›";position:absolute;left:0;color:var(--stamp);font-weight:600}
+
+  .ai-row{margin-top:auto;border-top:1px dashed var(--line);padding-top:13px;display:flex;flex-direction:column;gap:10px}
+  .chan-row{display:flex;gap:6px;flex-wrap:wrap}
+  .chan{font-size:10.5px;padding:4px 9px;border:1px solid var(--ink);border-radius:2px;cursor:pointer;background:transparent;letter-spacing:.04em}
+  .chan[aria-pressed="true"]{background:var(--flag);border-color:var(--flag);color:var(--ink)}
+  .chan:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+  .spin{
+    font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;letter-spacing:.05em;
+    background:var(--ink);color:var(--paper);border:none;padding:11px;cursor:pointer;border-radius:2px;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;
+  }
+  .spin:hover{background:var(--stamp)}
+  .spin:disabled{opacity:.55;cursor:wait}
+  .spin:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .ai-out{
+    font-family:'Spectral',serif;font-size:14px;line-height:1.5;
+    background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--flag);
+    padding:12px 13px;border-radius:2px;white-space:pre-wrap;
+  }
+  .ai-out .copy{
+    margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;background:transparent;border:1px solid var(--ink);padding:5px 10px;
+    cursor:pointer;border-radius:2px;
+  }
+  .ai-out .copy:hover{background:var(--paper-2)}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Spectral',serif;font-style:italic;font-size:18px}
+
+  footer{margin-top:46px;border-top:3px solid var(--ink);padding-top:18px;font-size:11px;color:var(--ink-soft);line-height:1.6;letter-spacing:.02em}
+  footer b{color:var(--ink)}
+
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  .loading::after{content:"";animation:blink 1s steps(1) infinite}
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr}
+    .ledger{flex-direction:column}
+    .top-strip{font-size:10px}
+    .msg{max-width:100%}
+  }
+
+  /* ---------- ask the desk ---------- */
+  .ask{
+    background:var(--paper-card);border:1.5px solid var(--ink);border-radius:3px;
+    box-shadow:3px 4px 0 rgba(26,22,17,.13);margin:30px 0 8px;overflow:hidden;position:relative;
+  }
+  .ask-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+    padding:15px 18px;border-bottom:1px dashed var(--line);background:var(--paper-2);flex-wrap:wrap}
+  .ask-title{font-family:'Archivo Black',sans-serif;font-size:21px;text-transform:uppercase;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .ask-title .dot{width:9px;height:9px;border-radius:50%;background:#2E8B57;box-shadow:0 0 0 3px rgba(46,139,87,.22)}
+  .ask-sub{font-family:'Spectral',serif;font-style:italic;color:var(--ink-soft);font-size:13.5px;margin-top:4px;max-width:480px}
+  .clearance{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;padding-top:5px}
+  .clearance b{color:var(--stamp)}
+
+  .chatlog{padding:16px 18px;display:flex;flex-direction:column;gap:13px;max-height:430px;overflow-y:auto}
+  .msg{display:flex;font-size:13.5px;line-height:1.5;max-width:92%}
+  .msg .who{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+  .msg.you{align-self:flex-end;text-align:right}
+  .msg .bubble{padding:10px 13px;border-radius:3px;border:1px solid var(--line)}
+  .msg.desk .bubble{background:var(--paper);border-left:3px solid var(--ink);font-family:'Spectral',serif;font-size:14.5px;white-space:pre-wrap}
+  .msg.you .bubble{background:var(--ink);color:var(--paper);border:none}
+  .seed{font-family:'Spectral',serif;font-style:italic;color:var(--ink-soft);font-size:14px}
+  .seedchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+  .seedchip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;border:1px solid var(--ink);background:transparent;border-radius:2px;padding:6px 10px;cursor:pointer;text-align:left;color:var(--ink)}
+  .seedchip:hover{background:var(--paper-2)}
+
+  .ask-input{display:flex;gap:9px;padding:13px 18px;border-top:1px dashed var(--line);background:var(--paper-2)}
+  .ask-input input{flex:1;font-family:'IBM Plex Mono',monospace;font-size:13.5px;background:var(--paper);border:1.5px solid var(--ink);color:var(--ink);padding:10px 12px;border-radius:2px}
+  .ask-input input:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .ask-input input:disabled{opacity:.5}
+  .ask-send{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;background:var(--ink);color:var(--paper);border:none;padding:10px 18px;border-radius:2px;cursor:pointer}
+  .ask-send:hover{background:var(--stamp)}
+  .ask-send:disabled{opacity:.5;cursor:not-allowed}
+
+  .paywall{position:absolute;inset:0;background:rgba(231,224,208,.88);display:none;align-items:center;justify-content:center;padding:24px;z-index:5}
+  .paywall.show{display:flex}
+  .pw-card{background:var(--paper-card);border:2.5px solid var(--ink);border-radius:4px;max-width:430px;width:100%;
+    padding:26px 24px;box-shadow:5px 7px 0 rgba(26,22,17,.2);text-align:center;position:relative}
+  .pw-stamp{position:absolute;top:-14px;right:18px;background:var(--stamp);color:#fff;font-size:10.5px;font-weight:600;
+    letter-spacing:.18em;padding:4px 10px;transform:rotate(3deg);border-radius:2px}
+  .pw-card h3{font-family:'Archivo Black',sans-serif;font-size:23px;text-transform:uppercase;line-height:1.02;margin-bottom:10px}
+  .pw-card p{font-family:'Spectral',serif;font-size:14.5px;color:var(--ink-soft);margin-bottom:16px;line-height:1.5}
+  .pw-price{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13.5px;margin-bottom:12px;letter-spacing:.02em}
+  .pw-price b{color:var(--stamp)}
+  .pw-plans{display:flex;gap:9px;margin-bottom:10px}
+  .pw-plan{flex:1;font-family:'IBM Plex Mono',monospace;background:var(--paper);border:1.5px solid var(--ink);
+    border-radius:3px;padding:11px 8px;cursor:pointer;text-align:center;display:flex;flex-direction:column;gap:3px;transition:all .12s;position:relative}
+  .pw-plan:hover{background:var(--paper-2)}
+  .pw-plan b{font-size:14px;letter-spacing:.02em}
+  .pw-plan span{font-size:11px;color:var(--ink-soft)}
+  .pw-plan[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .pw-plan[aria-pressed="true"] span{color:rgba(231,224,208,.8)}
+  .pw-plan .best{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--flag);color:var(--ink);
+    font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border-radius:2px;white-space:nowrap}
+  .pw-plan:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .pw-cap{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-bottom:14px;letter-spacing:.01em}
+  .pw-cap b{color:var(--ink)}
+  .pw-form{display:flex;flex-direction:column;gap:8px}
+  .pw-form input{font-family:'IBM Plex Mono',monospace;font-size:13px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);padding:10px 11px;border-radius:2px}
+  .pw-form input:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .pw-cta{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;background:var(--ink);color:var(--paper);border:none;padding:12px;border-radius:2px;cursor:pointer;letter-spacing:.04em;margin-top:2px}
+  .pw-cta:hover{background:var(--stamp)}
+  .pw-alt{font-size:11.5px;color:var(--ink-soft);margin-top:14px}
+  .pw-alt button{background:none;border:none;color:var(--ink);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:11.5px}
+  .pw-done{font-family:'Spectral',serif;font-size:15px;line-height:1.5;color:var(--ink-soft)}
+  .phx{border-top:1px dashed var(--line);padding-top:13px;display:flex;flex-direction:column;gap:7px}
+  .phx-k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#2E5A4F;font-weight:600}
+  .phx-cta{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;background:#2E5A4F;color:#fff;text-decoration:none;padding:9px 12px;border-radius:2px;text-align:center;transition:background .12s}
+  .phx-cta:hover{background:#24463d}
+  .phx-cta:focus-visible,.phx-book:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .phx-book{font-size:11.5px;color:var(--ink-soft);text-align:center;text-decoration:underline}
+  .phx-book:hover{color:var(--ink)}
+  .byline{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);margin-top:12px;letter-spacing:.02em}
+  .byline a{color:var(--stamp);text-decoration:none;font-weight:600}
+  .byline a:hover{text-decoration:underline}
+  .chip.v-wealth[aria-pressed="true"]{background:#8A6D1F;border-color:#8A6D1F}
+  .chip.v-pharma[aria-pressed="true"]{background:#355C7D;border-color:#355C7D}
+  .vtag.wealth{background:#8A6D1F}
+  .vtag.pharma{background:#355C7D}
+  .phx-fix{font-size:12px;line-height:1.45;background:rgba(46,90,79,.07);border:1px solid var(--line);border-left:3px solid #2E5A4F;border-radius:2px;padding:8px 10px}
+  .phx-fix-k{display:block;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#2E5A4F;font-weight:600;margin-bottom:3px}
+  .audience{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-soft);margin-top:10px;line-height:1.5}
+  .motto{font-family:'Archivo Black',sans-serif;font-size:clamp(13px,2vw,16px);text-transform:uppercase;letter-spacing:.01em;margin-top:14px;color:var(--ink);display:flex;align-items:center;gap:10px}
+  .motto::before{content:"";width:26px;height:3px;background:var(--stamp);display:inline-block}
+  .body{font-family:'Spectral',serif;font-size:14.5px;line-height:1.62;white-space:pre-line;color:var(--ink)}
+  .sect{font-size:12.5px}
+  .sect-k{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:6px}
+  .sect ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .redflags li{padding-left:18px;position:relative;line-height:1.4}
+  .redflags li::before{content:"\2713";position:absolute;left:0;color:var(--stamp);font-weight:700}
+  .questions li{padding-left:15px;position:relative;line-height:1.4}
+  .questions li::before{content:"\2022";position:absolute;left:0;color:#2E5A4F;font-weight:700}
+  .strip-tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .dispatch{display:grid;grid-template-columns:1.4fr 1fr 1.3fr;gap:18px;align-items:center;background:var(--paper-card);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 4px 0 rgba(26,22,17,.13);padding:16px 18px;margin:24px 0 4px}
+  .dispatch .eyebrow{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:6px}
+  .dispatch-title{font-family:'Archivo Black',sans-serif;font-size:16px;line-height:1.15;margin-bottom:9px}
+  .dispatch-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;background:var(--ink);color:var(--paper);border:none;padding:8px 13px;border-radius:2px;cursor:pointer}
+  .dispatch-btn:hover{background:var(--stamp)}
+  .prog-row{display:flex;align-items:center;gap:10px}
+  .prog-bar{flex:1;height:9px;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--stamp);width:0;transition:width .4s ease}
+  #progText{font-size:12px;color:var(--ink-soft);white-space:nowrap;font-weight:600}
+  .email-row{display:flex;gap:7px}
+  .email-row input{flex:1;font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--paper);border:1.5px solid var(--ink);color:var(--ink);padding:8px 10px;border-radius:2px}
+  .email-row input:focus-visible{outline:2.5px solid var(--stamp);outline-offset:2px}
+  .email-row button{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;background:#2E5A4F;color:#fff;border:none;padding:8px 12px;border-radius:2px;cursor:pointer}
+  .email-row button:hover{background:#24463d}
+  .email-msg{font-size:11px;margin-top:6px;min-height:14px}
+  .file.flash{box-shadow:0 0 0 3px var(--stamp),3px 4px 0 rgba(26,22,17,.13)}
+  @media(max-width:820px){.dispatch{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="top-strip">
+      <span>Dossier · Internal circulation</span>
+      <span class="strip-tag">Educational field file</span>
+    </div>
+    <h1>Phoenix Rising<span class="thin">The conversations the industry wishes were discussed more openly.</span></h1>
+    <p class="dek">Investigations, controversies, myths, and uncomfortable truths about health insurance, life insurance, retirement, medical costs, and financial planning.</p>
+    <p class="audience">Built for agents, advisors, and consumers who prefer facts over talking points.</p>
+    <p class="motto">Question everything. Explain better. Help people win.</p>
+    <p class="byline">A <a href="https://www.phoenixsecuritas.com" target="_blank" rel="noopener">Phoenix Securitas</a> project by Marimer Cruz-Nieves · licensed in TX · FL · OH · NY</p>
+  </header>
+
+  <section class="ask" id="ask">
+    <div class="ask-head">
+      <div>
+        <div class="ask-title"><span class="dot"></span>Ask the Desk</div>
+        <div class="ask-sub">Plain-English answers on health, life &amp; the money game — from someone on your side, not the carrier's.</div>
+      </div>
+      <div class="clearance" id="clearance">Free questions left: <b id="qleft">3</b></div>
+    </div>
+    <div class="chatlog" id="chatlog">
+      <div class="seed">
+        Ask about a denial, a clause you don't trust, a policy someone's pitching you, or any of the case files below.
+        <div class="seedchips" id="seedchips">
+          <button class="seedchip">Why would my claim get denied?</button>
+          <button class="seedchip">Is whole life actually a good investment?</button>
+          <button class="seedchip">What's a fiduciary, and why should I care?</button>
+          <button class="seedchip">What's a copay accumulator?</button>
+        </div>
+      </div>
+    </div>
+    <div class="ask-input">
+      <input id="askbox" type="text" placeholder="Type your question…" aria-label="Ask the Desk a question" autocomplete="off">
+      <button class="ask-send" id="asksend">Send</button>
+    </div>
+
+    <div class="paywall" id="paywall">
+      <div class="pw-card" id="pwcard">
+        <span class="pw-stamp">CLEARANCE USED</span>
+        <h3>That's your 3 free answers.</h3>
+        <p>That's your 3 on the house. Keep the file open with a day pass or a monthly plan — or skip the bot and talk to a licensed human who actually picks up.</p>
+        <div class="pw-plans" id="pwplans">
+          <button class="pw-plan" data-tier="day" aria-pressed="false"><b>$9</b><span>Day pass · 24 hrs</span></button>
+          <button class="pw-plan" data-tier="month" aria-pressed="true"><span class="best">Best value</span><b>$30</b><span>Per month</span></button>
+        </div>
+        <div class="pw-cap">Both plans include <b>100 questions / month</b>. Not unlimited — enough to actually get answers.</div>
+        <div class="pw-form" id="pwform">
+          <input id="pw-name" type="text" placeholder="First name" autocomplete="given-name">
+          <input id="pw-email" type="email" placeholder="Email" autocomplete="email">
+          <input id="pw-phone" type="tel" placeholder="Phone (optional)" autocomplete="tel">
+          <button class="pw-cta" id="pwcta">Unlock access</button>
+        </div>
+        <div class="pw-alt">Rather just talk? <button id="pwconsult">Book a free 15-min consult</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dispatch" id="dispatch" aria-label="This week and your progress">
+    <div class="dispatch-main">
+      <div class="eyebrow">This week's file</div>
+      <div class="dispatch-title" id="weekTitle">—</div>
+      <button class="dispatch-btn" id="weekOpen">Open this dossier →</button>
+    </div>
+    <div class="dispatch-progress">
+      <div class="eyebrow">Files you've opened</div>
+      <div class="prog-row"><div class="prog-bar"><div class="prog-fill" id="progFill"></div></div><span id="progText">0 / 0</span></div>
+    </div>
+    <div class="dispatch-email">
+      <div class="eyebrow">Get next week's file</div>
+      <div class="email-row">
+        <input id="dispEmail" type="email" placeholder="your email" aria-label="Email for next week's dossier" autocomplete="email">
+        <button id="dispEmailBtn">Send it</button>
+      </div>
+      <div class="email-msg" id="dispEmailMsg"></div>
+    </div>
+  </section>
+
+  <section class="controls" aria-label="Filters">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Vertical</span>
+      <div class="chips" id="vchips">
+        <button class="chip" data-v="all" aria-pressed="true">All</button>
+        <button class="chip v-health" data-v="health" aria-pressed="false">Health</button>
+        <button class="chip v-life" data-v="life" aria-pressed="false">Life</button>
+        <button class="chip v-finance" data-v="finance" aria-pressed="false">Money</button>
+        <button class="chip v-wealth" data-v="wealth" aria-pressed="false">Rich</button>
+        <button class="chip v-pharma" data-v="pharma" aria-pressed="false">Pharma</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Sort by</span>
+      <div class="chips" id="schips">
+        <button class="chip" data-s="heat" aria-pressed="true">Heat</button>
+        <button class="chip" data-s="silence" aria-pressed="false">How quiet it is</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Search</span>
+      <input class="search" id="search" type="search" placeholder="e.g. denial, PBM, fees, annuity…" aria-label="Search topics">
+    </div>
+    <span class="count" id="count"></span>
+  </section>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <b>How to read a dossier.</b> Each file rates HEAT (how actively debated the topic is) and how QUIET it tends to be in everyday conversation (5 = rarely discussed plainly). The classification, red flags, and questions are there to help you ask better questions — not to indict anyone.<br>
+    <b>Educational, not advice.</b> Everything here is general education, not legal, tax, or coverage advice, and not a recommendation to buy or drop any product. Specifics vary by carrier, plan, and state. The drafted posts are starting points — read them before publishing.<br><br>
+    <b>Phoenix Securitas Premium.</b> Insurance products and services are offered through Phoenix Securitas Premium. Marimer Cruz-Nieves is a licensed insurance agent (NPN 21566471) in TX, FL, OH &amp; NY. Everything here is educational only — not legal, tax, investment, or financial advice, and not a recommendation to buy or drop any product. Availability, rates, and benefits vary by carrier, state, and individual circumstances. For Medicare, she does not offer every plan available in your area; contact Medicare.gov or 1-800-MEDICARE for all options. 401k rollover and annuity information is educational only — consult a qualified tax professional. <a href="https://www.phoenixsecuritas.com" target="_blank" rel="noopener" style="color:var(--stamp);font-weight:600">phoenixsecuritas.com</a>
+  </footer>
+
+</div>
+
+<script>
+const DATA = [
+  // ---------------- HEALTH ----------------
+  {v:"health",case:"H-01",cls:"Quietly costly",prod:"aca",heat:4,silence:5,
+   title:"The Copay Card That Doesn't Count Toward Your Deductible",
+   body:"Manufacturer copay assistance can feel like a gift, but some plans no longer count those dollars toward your deductible or out-of-pocket maximum. The assistance gets used up, and you still owe the full amount later.\n\nThis is known as a copay accumulator or maximizer. For someone on an expensive ongoing medication, it can mean a surprise bill mid-year for money they assumed they had already spent. It is legal, it is common, and almost nobody has it explained to them up front.",
+   redflags:["A surprise bill after months of using a copay card","Your deductible not moving despite large payments","Plan documents mentioning 'accumulator' or 'maximizer'"],
+   questions:["Does my plan count copay assistance toward my deductible?","Is there an accumulator or maximizer program?","What will I actually owe once the assistance runs out?"],
+   takeaway:"Copay assistance does not always reduce what you ultimately owe. Read how your plan treats it before you rely on it.",
+   fix:"A quick plan review with Marimer can flag whether an accumulator applies to you and what your real out-of-pocket looks like."},
+
+  {v:"health",case:"H-02",cls:"Underreported",prod:"aca",heat:4,silence:5,
+   title:"Why the Rule Meant to Protect You Can Raise Your Premium",
+   body:"Insurers are required to spend most of your premium on care and keep a capped percentage. On its face that protects consumers. The wrinkle is that when the cap on profit is a percentage of total spending, the math can quietly reward higher costs, because a slice of a bigger number is a bigger number.\n\nThat does not make insurers villains, but it does explain why there is limited built-in pressure to drive total costs down. Understanding the incentive helps you read rising premiums with clearer eyes.",
+   redflags:["Premiums rising faster than your actual usage","Little explanation for year-over-year increases","Assuming a consumer-protection rule means lower prices"],
+   questions:["Why did my premium increase this year?","Are there lower-cost plans that cover what I actually use?","Am I over-insured for my situation?"],
+   takeaway:"A rule designed to protect you does not automatically lower your premium. It is worth comparing plans every year.",
+   fix:"Marimer reviews your plan against your actual needs each year, so you are not overpaying out of habit."},
+
+  {v:"health",case:"H-03",cls:"Underreported",prod:"aca",heat:5,silence:4,
+   title:"A Robot Denied Your Claim. A Human Can Still Overturn It.",
+   body:"Many prior authorizations and claims are now processed automatically. Some denials arrive so quickly that no physician could realistically have reviewed the chart, which means the decision was closer to a filter than a judgment.\n\nThe encouraging part is that appeals work. A large share of denied claims are overturned once a person actually reviews them, yet most people never file the appeal. Knowing that a denial is often the start of the conversation, not the end of it, changes what you do next.",
+   redflags:["A denial that arrives within seconds or minutes","Generic, templated denial language","No physician named or reasoning given","The same code denied for many people"],
+   questions:["What exactly was the stated reason for the denial?","Is there both an internal and an external appeal?","What is the deadline to appeal?","Can my doctor request a peer-to-peer review?"],
+   takeaway:"A denial is not always the final answer, and appealing is often worth the few minutes it takes.",
+   fix:"Phoenix can help you read a denial, understand your coverage, and map out your appeal options."},
+
+  {v:"health",case:"H-04",cls:"Controversial",prod:"medsupp",heat:5,silence:4,
+   title:"Why That $0 Medicare Plan Isn't Really Free",
+   body:"The zero-premium Medicare Advantage plans in loud TV ads are not charity. Plans are paid more for sicker members, which creates strong incentive to document every possible diagnosis through chart reviews and home visits.\n\nThese plans work well for some people and poorly for others. The point is not to fear them, but to go in understanding the tradeoffs: the network, the prior-authorization rules, and what happens if you later want to switch back. 'Free' describes the premium, not the whole picture.",
+   redflags:["A pitch focused only on the $0 premium","No discussion of network or prior authorization","Pressure to enroll before you have compared options","Unclear what happens if you want to switch later"],
+   questions:["Is my doctor in this plan's network?","What needs prior authorization?","What are the out-of-pocket maximums?","How hard is it to switch plans later?"],
+   takeaway:"A $0 premium is one number, not the whole plan. The network and the rules matter just as much.",
+   fix:"Marimer walks you through Medicare options in plain language so you choose with the full picture, not just the ad."},
+
+  {v:"health",case:"H-05",cls:"Underreported",prod:"aca",heat:4,silence:5,
+   title:"When Your Insurance Directory Lists Doctors Who Won't See You",
+   body:"A provider directory can look deep until you start calling. So-called ghost networks are padded with doctors who have moved, retired, are not taking new patients, or are not actually in network. It is often worst in mental health, where someone in need calls many listed providers and reaches none.\n\nA directory is a starting point, not a guarantee. Confirming a provider is genuinely available and in network before you enroll can save real frustration later.",
+   redflags:["Listed doctors not accepting new patients","Repeated dead ends when you call","A directory that looks much bigger than reality","Especially thin access for mental health"],
+   questions:["Is this provider actually taking new patients?","Are they confirmed in network for this exact plan?","How current is the directory?","What is the real wait time for an appointment?"],
+   takeaway:"A directory listing is not the same as available care. Verify before you rely on it.",
+   fix:"Marimer can help you check whether the care you need is genuinely accessible before you commit to a plan."},
+
+  {v:"health",case:"H-06",cls:"Widely misunderstood",prod:"aca",heat:4,silence:4,
+   title:"When Your Insurer Overrules Your Doctor",
+   body:"Step therapy, sometimes called fail-first, requires you to try and fail an insurer's preferred lower-cost drug before they will cover the one your doctor prescribed, even when your records suggest the cheaper option is not right for you.\n\nThere is a logic to managing costs, but it can cost you time and health. The good news is that many plans have exceptions and appeal paths, and a doctor's documentation can carry real weight when you ask for one.",
+   redflags:["Being told to try a different drug than prescribed","A coverage denial citing 'preferred' alternatives","No mention of an exceptions process","Delays while you 'fail' a medication"],
+   questions:["Is there a step-therapy exception process?","What documentation does my doctor need to provide?","How long does an exception take?","What happens to my health while I wait?"],
+   takeaway:"Step therapy can often be challenged, especially with strong documentation from your doctor.",
+   fix:"Phoenix can help you understand your plan's exception process so a 'fail first' rule does not go unchallenged."},
+
+  {v:"health",case:"H-07",cls:"Underreported",prod:"aca",heat:5,silence:5,
+   title:"The Middleman Deciding What Your Prescriptions Cost",
+   body:"Between you and the pharmacy sits a company most people cannot name: the pharmacy benefit manager. PBMs can charge a plan more than they pay the pharmacy and keep the difference, and they negotiate rebates tied to a drug's list price, which can push list prices upward.\n\nThat dynamic hits the uninsured and high-deductible patients hardest, because they often pay closer to list. You cannot control PBMs, but understanding they exist helps explain why prices behave the way they do, and why shopping a prescription can pay off.",
+   redflags:["Wildly different cash vs insurance prices","The same drug costing more at one pharmacy","High costs while on a deductible","No transparency on what you are actually paying for"],
+   questions:["Is the cash price lower than my insurance price here?","Is there a generic or therapeutic alternative?","Does a discount card beat my copay?","Would a different pharmacy cost less?"],
+   takeaway:"The price of a prescription is shaped by middlemen you never see. Comparing cash, card, and copay can save money.",
+   fix:"Marimer can help you pick coverage that keeps your real drug costs in check, not just the sticker premium."},
+
+  {v:"health",case:"H-08",cls:"Widely misunderstood",prod:"privateh",heat:4,silence:3,
+   title:"Cheap Coverage Isn't Always Good Coverage",
+   body:"Some plans are inexpensive because they cover less than people assume. Short-term and certain indemnity-style plans can exclude pre-existing conditions, cap what they pay at amounts a single hospital stay exceeds, or end coverage after a large claim.\n\nThere are legitimate uses for lower-cost plans, such as bridging a short gap. The risk is buying one believing it is comprehensive. Having insurance and having coverage that will actually pay a major bill are not always the same thing, and the difference shows up at the worst possible time.",
+   redflags:["Premiums far below comparable plans","Annual or per-incident benefit caps","Pre-existing conditions excluded","Coverage that can end after you file a claim"],
+   questions:["Does this cover pre-existing conditions?","Is there a cap on what it pays?","What exactly is excluded?","Is this meant as a bridge or as my main coverage?"],
+   takeaway:"Cheaper can be fine for the right purpose. Just know precisely what a low premium is leaving out.",
+   fix:"Marimer compares real plans so you know what is covered, what is not, and which one fits your situation and budget."},
+
+  {v:"health",case:"H-09",cls:"Underreported",prod:"aca",heat:5,silence:4,
+   title:"You Were Fired, and Your Coverage May Have Ended With the Job",
+   body:"For many people, the job is also the health insurance, the life insurance, and half the safety net. When the job ends, most of that can end too, often faster than people expect. Employer coverage frequently stops within days or weeks, not at year-end.\n\nCOBRA can continue it, but at the full unsubsidized premium plus a fee, right when there is no paycheck. Group life insurance usually cannot come with you. The benefits that felt like yours belonged to the company, and they tend to leave when the badge does.",
+   redflags:["Assuming coverage lasts until year-end","No plan for the gap between jobs","Relying only on employer life insurance","Sticker shock at the COBRA premium"],
+   questions:["Exactly when does my employer coverage end?","What does COBRA cost compared to an individual plan?","Can my employer life insurance be converted or ported?","What coverage do I own outside of work?"],
+   takeaway:"Coverage you own cannot be lost with a job. Coverage your employer owns can.",
+   fix:"Marimer can line up portable health, life, and accident coverage so a job change never means losing the safety net."},
+
+  // ---------------- LIFE ----------------
+  {v:"life",case:"L-01",cls:"Widely misunderstood",prod:"life",heat:4,silence:5,
+   title:"Why Most Life Insurance Never Pays a Claim",
+   body:"Term life insurance is designed to cover a specific window, and the large majority of term policies never pay a death claim because the insured outlives the term. That is not a scandal, it is how the math is priced, and it is part of why term is affordable.\n\nThe lesson is not to avoid term, it is to match the coverage to the years your family is most exposed, and to revisit it as life changes. A policy that lapses early or expires right before it is needed is the outcome worth planning against.",
+   redflags:["A term length that ends before your need does","Buying coverage and never revisiting it","Letting a policy lapse to save a small premium","Coverage amounts that no longer match your life"],
+   questions:["How many years does my family actually need coverage?","Should this be term, permanent, or a mix?","What happens when the term ends?","When should I review this again?"],
+   takeaway:"Term is affordable precisely because most policies never pay out. The goal is matching coverage to the years you need it.",
+   fix:"Marimer helps you size the coverage to your real exposure, so you are protected during the years that matter most."},
+
+  {v:"life",case:"L-02",cls:"Hotly debated",prod:"life",heat:5,silence:4,
+   title:"When IUL Is Oversold",
+   body:"Indexed universal life is often illustrated with optimistic returns, but caps and participation rates can change over time, the internal cost of insurance rises as you age, and the policy has to be actively managed to stay healthy.\n\nNone of that makes IUL bad. For the right person, properly structured and funded, it can be a genuinely useful tool. The disappointment usually comes when someone is handed a glossy best-case illustration as if it were a guarantee, and nobody walks them through what happens if returns come in lower.",
+   redflags:["An illustration presented as if it is guaranteed","Heavy focus on the best-case column","No discussion of lower-return scenarios","Pressure to fund at the bare minimum"],
+   questions:["What return assumptions are in this illustration?","What happens if returns are lower than shown?","What are the policy's expenses and cost of insurance?","What is the alternative, and how do they compare?"],
+   takeaway:"IULs can be excellent tools or real disappointments. The difference is honest assumptions and active management.",
+   fix:"Marimer will show you the conservative numbers too, and tell you honestly whether an IUL fits your situation."},
+
+  {v:"life",case:"L-03",cls:"Hotly debated",prod:"life",heat:4,silence:4,
+   title:"What 'Be Your Own Bank' Actually Means",
+   body:"The pitch is appealing: borrow against your policy's cash value and become your own bank. What it really means is borrowing against money that is largely your own premiums, minus the heavier costs of the early years, and paying interest to access it.\n\nFor specific situations it can work. It is oversold as a universal hack, often skipping past opportunity cost, loan interest, and the years it takes before cash value is meaningful. Worth understanding clearly before anyone sells you the seminar.",
+   redflags:["Promises that sound like a money hack","No mention of loan interest or opportunity cost","Skipping over the slow early years of cash value","A seminar pushing one specific product"],
+   questions:["How many years until cash value is meaningful?","What interest applies to policy loans?","What am I giving up by using this money?","Who specifically benefits when I buy this?"],
+   takeaway:"Borrowing against your own policy can fit some situations, but it is not free and it is not magic.",
+   fix:"Marimer will tell you honestly whether this strategy fits your goals, or whether something simpler serves you better."},
+
+  {v:"life",case:"L-04",cls:"Widely misunderstood",prod:"life",heat:5,silence:4,
+   title:"The First Two Years of a Policy Aren't as Airtight as You Think",
+   body:"Most life policies include a contestability period, typically the first two years, during which the insurer can investigate and deny a claim over a misstatement on the application, even a minor or unrelated one.\n\nFamilies often discover this at the worst possible moment. The strongest defense is simple and rarely emphasized: a complete, honest, fully disclosed application. Over-disclosing on the front end protects the people who will one day file the claim.",
+   redflags:["Rushing through the application","Leaving questions blank or vague","Assuming small details do not matter","No one stressing full disclosure"],
+   questions:["What is the contestability period on this policy?","Have I disclosed everything completely and accurately?","What could cause a claim to be contested?","Should I update the application if something changes?"],
+   takeaway:"An honest, complete application is the best protection your beneficiaries have during the first two years.",
+   fix:"Marimer makes sure your application is complete and accurate, so a claim is not jeopardized over a technicality."},
+
+  {v:"life",case:"L-05",cls:"Widely misunderstood",prod:"life",heat:4,silence:4,
+   title:"What 'Guaranteed Acceptance' Final Expense Really Pays in Year One",
+   body:"Guaranteed-issue and final-expense policies marketed to seniors often carry a graded death benefit. If the insured passes from natural causes in the first two to three years, beneficiaries typically receive premiums paid plus some interest, not the full face amount in the ad.\n\nIt can be a legitimate and sometimes the only available option, but it is frequently sold to people who never had the graded clause explained. Knowing the structure before you buy prevents a painful surprise later.",
+   redflags:["'Guaranteed acceptance' with no exam","A 'graded' clause not clearly explained","Marketing that shows only the full face amount","Aimed at seniors who may not read the fine print"],
+   questions:["Is there a graded death benefit?","What is actually paid if death occurs in the first years?","When does full coverage begin?","Is there a better option I would qualify for?"],
+   takeaway:"Guaranteed acceptance can be useful, but the graded period means it may not pay the full amount right away.",
+   fix:"Marimer explains exactly what a final-expense policy pays and when, and whether you qualify for something stronger."},
+
+  {v:"life",case:"L-06",cls:"Underreported",prod:"life",heat:4,silence:4,
+   title:"Why Term and Permanent Pay Your Agent Very Differently",
+   body:"Compensation on permanent and indexed policies is typically far higher than on term. That does not mean permanent is wrong, but it does mean the product that is best for you is not always the product that pays the most.\n\nThe healthiest thing you can do is simply ask how your agent is compensated. A good advisor welcomes the question and can explain why a recommendation fits your situation, not just their pay structure.",
+   redflags:["A push toward permanent without clear reasoning","Discomfort when you ask about compensation","'Buy term and invest the difference' never discussed","One product recommended for everyone"],
+   questions:["How are you compensated on this versus the alternatives?","Why is this the right fit for my situation?","Would term plus investing the difference serve me better?","What are the long-term costs?"],
+   takeaway:"The best policy for you is not always the one that pays the most. It is fair to ask how your advisor is paid.",
+   fix:"Marimer is upfront about how she is compensated and recommends what fits you, even when it is the simpler option."},
+
+  {v:"life",case:"L-07",cls:"Underreported",prod:"life",heat:4,silence:5,
+   title:"The Algorithm That Prices Your Life Insurance",
+   body:"Accelerated underwriting can set your rate or decline you in seconds using data such as credit-based scores, prescription histories, and motor-vehicle records, often with no exam and no explanation of which data point moved your price.\n\nRegulators have warned these models can unintentionally act as proxies for things like income or background. No exam is convenient, but it is reasonable to ask what is being used instead, and whether a fully underwritten policy might serve you better.",
+   redflags:["A fast decision with no explanation","No exam but a surprising rate","No insight into which data was used","An automatic decline you do not understand"],
+   questions:["What data was used to price or decline my policy?","Would a fully underwritten policy give a better rate?","Can I correct inaccurate information?","Is there a different carrier worth comparing?"],
+   takeaway:"No-exam underwriting is convenient, but it is fair to ask what data is being used in its place.",
+   fix:"Marimer can compare carriers and underwriting approaches so a black-box model is not the only thing pricing your policy."},
+
+  {v:"life",case:"L-08",cls:"Underreported",prod:"life",heat:4,silence:5,
+   title:"You Can Sell Your Life Insurance Policy. Here's the Catch.",
+   body:"Through a life settlement, a policyholder can sell an existing policy for cash, after which investors keep paying premiums and collect the benefit later. For some seniors it can beat simply lapsing a policy they no longer want.\n\nIn the wrong hands it can edge toward predatory, and most consumers do not know the option, or the risk, even exists. If anyone raises it, it deserves careful, unbiased review before you act.",
+   redflags:["An unsolicited offer to buy your policy","Pressure to decide quickly","No clear comparison to other options","Unclear who profits and how much"],
+   questions:["Is selling better than keeping or surrendering this policy?","What are the tax consequences?","Who is buying it and what do they pay?","Is there a less drastic alternative?"],
+   takeaway:"Selling a policy can be a legitimate option or a costly mistake. It is worth an unbiased second look first.",
+   fix:"Marimer can review whether keeping, adjusting, or surrendering a policy serves you better than selling it."},
+
+  // ---------------- MONEY ----------------
+  {v:"finance",case:"M-01",cls:"Quietly costly",prod:"retire",heat:4,silence:5,
+   title:"How a 1% Fee Can Quietly Cost You a Third of Your Retirement",
+   body:"A 1% annual fee sounds like a rounding error. Run it across decades of compounding and the picture changes, because the fee is taken every year while your money is trying to grow. Over a working lifetime it can quietly absorb a meaningful share of what your portfolio would otherwise have become.\n\nThe number looks small precisely because it is deducted before you ever see the balance. Knowing your all-in cost is one of the simplest ways to keep more of your own growth.",
+   redflags:["Not knowing your funds' expense ratios","Layered advisory plus fund fees","'It is only 1%' without the long-term math","Fees buried and rarely discussed"],
+   questions:["What is my all-in annual cost?","What am I getting for that fee?","Are there comparable lower-cost options?","How much does this cost me over 30 years?"],
+   takeaway:"A 1% fee is not 1% of your life. Over decades it can quietly cost a large share of your growth.",
+   fix:"Marimer can help you see the true cost of where your money sits, and whether a cleaner option fits your goals."},
+
+  {v:"finance",case:"M-02",cls:"Underreported",prod:"retire",heat:4,silence:5,
+   title:"Who Earns the Interest on the Cash Sitting in Your Brokerage?",
+   body:"Your brokerage holds idle cash between trades. Many firms automatically sweep that cash into an in-house account paying very little, then earn a higher rate on the same money and keep the spread. When rates rose, that gap grew large enough to draw lawsuits.\n\nYou can often move idle cash into a money-market fund yourself, but it is rarely the default. A quick check of what your cash actually earns can be worth real money.",
+   redflags:["Idle cash earning near zero","A 'sweep' account you never chose","A large gap between your yield and market rates","No prompt to move cash to something better"],
+   questions:["What is my sweep account actually paying?","Can I move idle cash to a money-market fund?","How much am I leaving on the table?","What is the default, and can I change it?"],
+   takeaway:"Idle cash can quietly earn almost nothing while someone else earns the spread. Check what yours is paying.",
+   fix:"As part of a broader plan, Marimer can help make sure your safe money is actually working for you."},
+
+  {v:"finance",case:"M-03",cls:"Controversial",prod:"retire",heat:5,silence:4,
+   title:"Understanding Annuity Tradeoffs",
+   body:"'Guaranteed income' is comforting language, and for some people an annuity solves a real problem: the fear of outliving their savings. What buyers often miss are the tradeoffs, including surrender periods that lock money up for years, rider fees that add up, and limited access if circumstances change.\n\nAnnuities are not inherently good or bad. But every guarantee has a price, and the only way to judge whether it is worth it is to see the surrender schedule, the fees, and the alternatives side by side before signing.",
+   redflags:["A long surrender period not clearly explained","Fees and rider costs not itemized","A pitch focused only on the guarantee","No comparison to simpler alternatives"],
+   questions:["How long is the surrender period?","What are the total fees and rider costs?","How is the person selling it compensated?","What happens if I need the money early?"],
+   takeaway:"An annuity can be the right tool, but only after you have seen the surrender terms, the fees, and the alternatives.",
+   fix:"Marimer shops annuities across carriers and lays out the tradeoffs up front, or tells you honestly when one is not right for you."},
+
+  {v:"finance",case:"M-04",cls:"Widely misunderstood",prod:"retire",heat:3,silence:5,
+   title:"The 4% Retirement Rule Was Never a Guarantee",
+   body:"The idea that you can withdraw 4% a year and never run out gets repeated like a law of nature. It came from one researcher modeling specific past market conditions over a 30-year window, and it does not account for your actual sequence of returns.\n\nRetire into a poor stretch of markets and the same 4% can drain savings years early. Treated as a rough starting point rather than a promise, it is useful. Treated as a guarantee, it can quietly set people up to fall short.",
+   redflags:["Treating 4% as a guaranteed rule","No plan for a bad early market","One fixed withdrawal rate forever","Ignoring how timing affects outcomes"],
+   questions:["How does sequence of returns affect my plan?","What if markets fall early in my retirement?","Should my withdrawals flex with conditions?","How much cushion do I actually need?"],
+   takeaway:"The 4% rule is a starting assumption, not a promise. Your timing can change everything.",
+   fix:"Marimer can help build retirement income with guardrails, so a rough rule of thumb is not your whole plan."},
+
+  {v:"finance",case:"M-05",cls:"Widely misunderstood",prod:"book",heat:3,silence:5,
+   title:"The Credit Score You Check Isn't Always the One Lenders Use",
+   body:"You check your credit score, feel good, then apply for a loan and the lender pulls a different number. There are many versions of FICO plus VantageScore, and the free score in your app is often not the model a given lender uses to price a mortgage or auto loan.\n\nThe score is real, but it may not be the one that decides. Knowing that in advance prevents an unwelcome surprise at the closing table.",
+   redflags:["Assuming one universal credit score","A great app score but a worse loan offer","Not knowing which model a lender uses","Surprises at closing"],
+   questions:["Which scoring model will this lender use?","What range matters for the rate I want?","What is hurting my score the most?","Can I see the version the lender pulls?"],
+   takeaway:"There is no single credit score. The one your app shows may not be the one your lender uses.",
+   fix:"Strong financial footing supports better coverage decisions. Marimer can factor this into your overall plan."},
+
+  {v:"finance",case:"M-06",cls:"Widely misunderstood",prod:"book",heat:4,silence:4,
+   title:"Why 'No Interest for 12 Months' Can Backfire",
+   body:"Deferred-interest promotions on furniture, dental work, or electronics are not the same as 0% APR. Interest is quietly accruing the whole time. Miss the payoff by a single day or a single dollar and the lender can charge all of it retroactively, on the original balance, back to day one.\n\nThe model leans on the share of people who do not quite make it. Reading the terms before you sign, and setting reminders to pay it off early, keeps a helpful offer from turning costly.",
+   redflags:["'No interest if paid in full' wording","A hard deadline that triggers back-interest","Minimum payments that will not clear the balance in time","No reminder to finish before the deadline"],
+   questions:["Is this deferred interest or true 0% APR?","What happens if I miss the deadline?","What payment clears the balance in time?","Is there a simpler financing option?"],
+   takeaway:"Deferred interest is not 0%. Miss the deadline and you can owe it all at once.",
+   fix:"Sound financial habits protect your coverage too. Marimer can help you keep the whole picture stable."},
+
+  {v:"finance",case:"M-07",cls:"Underreported",prod:"life",heat:4,silence:5,
+   title:"Your Beneficiary Form Can Override Your Will",
+   body:"Beneficiary designations on a 401(k), IRA, and life insurance override your will. If a form is not updated after a divorce or a death, the money can legally go to an ex-spouse or a deceased person's estate, no matter what the will says.\n\nIt is one of the most common and quietest ways an inheritance ends up in the wrong hands, and it is also one of the easiest to fix. A few minutes reviewing your forms can save your family a great deal.",
+   redflags:["Beneficiary forms not reviewed in years","A major life event with no follow-up update","Assuming the will controls everything","Outdated or blank designations"],
+   questions:["When did I last update my beneficiaries?","Do my forms match my current wishes?","Are there contingent beneficiaries listed?","Do these align with my overall plan?"],
+   takeaway:"Your beneficiary forms can outrank your will. Reviewing them takes minutes and prevents costly mistakes.",
+   fix:"Marimer can review your coverage and beneficiary designations together, so the right people are protected."},
+
+  {v:"finance",case:"M-08",cls:"Controversial",prod:"retire",heat:4,silence:4,
+   title:"Why 'Free' Financial Advice Is Rarely Free",
+   body:"Commission-free apps often earn by selling your orders to firms that profit on the trade. And 'financial advisor' is a loose title. Many are held only to a suitability standard, meaning they can recommend a pricier product when a cheaper one would have done, as long as it is not unsuitable.\n\nThe simplest protection is one question: are you a fiduciary? A good advisor answers plainly and explains how they are paid. The goal is not suspicion, it is clarity about whose interest comes first.",
+   redflags:["A title of 'advisor' with no fiduciary commitment","Vague answers about compensation","'Free' service with an unclear business model","Products that seem to favor the seller"],
+   questions:["Are you a fiduciary?","How exactly are you compensated?","What are the lower-cost alternatives?","Whose interest comes first in this recommendation?"],
+   takeaway:"Ask whether someone is a fiduciary and how they are paid. Clear answers tell you a lot.",
+   fix:"Marimer is upfront about compensation and explains the tradeoffs, so you always know whose interest comes first."},
+
+  {v:"finance",case:"M-09",cls:"Underreported",prod:"privateh",heat:3,silence:5,
+   title:"The HSA Most People Use Wrong",
+   body:"A health savings account is the only account that is triple tax-advantaged: contributions go in pre-tax, growth is tax-free, and withdrawals are tax-free for medical costs. After 65 it works like a traditional IRA for anything else.\n\nMost people treat it like a debit card and spend it as they go, leaving years of tax-free growth on the table. Used as a long-term account, it can be one of the strongest retirement tools available, provided you have a qualifying high-deductible plan.",
+   redflags:["Spending the HSA the moment money goes in","Never investing the balance","Not knowing the triple tax advantage","Assuming you do not qualify without checking"],
+   questions:["Am I eligible for an HSA-qualified plan?","Can I invest my HSA balance?","Should I pay medical costs out of pocket and let it grow?","How does this fit my retirement plan?"],
+   takeaway:"An HSA can be a powerful long-term account, not just a medical debit card, if you use it that way.",
+   fix:"Marimer can help you choose an HSA-eligible plan and use it as the retirement edge it can be."},
+
+  {v:"finance",case:"M-10",cls:"Controversial",prod:"retire",heat:4,silence:4,
+   title:"What a Reverse Mortgage Doesn't Say Out Loud",
+   body:"A reverse mortgage turns home equity into cash with no monthly payment, which sounds ideal for seniors who want to stay in their home. The conditions are heavier than the ads suggest: fees and interest compound against the house, the inheritance for heirs can shrink or disappear, and foreclosure is still possible if you fall behind on taxes, insurance, or upkeep.\n\nFor some it is a legitimate tool. For many it is sold on the upside with the obligations left in the fine print.",
+   redflags:["A pitch focused only on tax-free cash","No clear explanation of compounding costs","Little discussion of impact on heirs","Foreclosure conditions glossed over"],
+   questions:["How do fees and interest accumulate over time?","What happens to my heirs' inheritance?","What obligations keep me out of foreclosure?","Is there a less costly alternative?"],
+   takeaway:"A reverse mortgage is a loan that compounds against your home. The obligations matter as much as the cash.",
+   fix:"Marimer can help you weigh a reverse mortgage against other retirement-income options before you commit."},
+
+  {v:"finance",case:"M-11",cls:"Widely misunderstood",prod:"retire",heat:4,silence:4,
+   title:"The Truth About Your 401(k)",
+   body:"The 401(k) gets treated as the retirement plan, and it is a solid tool with a few truths the enrollment brochure leaves out. The employer match is the only genuinely free money, so take it. But the menu is a short list someone else chose, fees can quietly skim a meaningful share of growth, and tax-deferred means taxed later, with required withdrawals forcing your hand starting in your 70s.\n\nThe assumption that you will be in a lower bracket in retirement often does not hold. The biggest decisions usually come not while you are in the plan, but when you leave the job.",
+   redflags:["Leaving the employer match on the table","Never checking the plan's fees","Assuming 'tax-deferred' means tax-free","No plan for the money when you change jobs"],
+   questions:["Am I capturing the full employer match?","What are the fees inside my plan?","What will the tax bill look like in retirement?","What are my options at rollover?"],
+   takeaway:"Take the match, mind the fees, and remember tax-deferred is not tax-free. The key move is often at rollover.",
+   fix:"Marimer's 401(k) rollover guidance helps you keep the match, manage the fees, and plan the tax bill instead of setting and forgetting."},
+
+  // ---------------- RICH PLAYBOOK ----------------
+  {v:"wealth",case:"W-01",cls:"Hotly debated",prod:"book",heat:5,silence:5,
+   title:"How the Wealthy Pay Little Tax Without Breaking the Law",
+   body:"Selling an asset triggers tax, so the very wealthy often avoid selling. Instead they borrow against appreciated assets at low rates to fund their lifestyle, let those assets keep compounding, and pass them to heirs at a stepped-up basis that can erase the built-in gains. The shorthand is buy, borrow, die.\n\nMost of this strategy depends on owning appreciating assets in the first place. You may not have a billionaire's balance sheet, but understanding how the game is played informs how you build and protect your own.",
+   redflags:["Believing the wealthy simply cheat on taxes","Selling appreciated assets without planning","No strategy connecting assets, debt, and legacy","Ignoring the step-up at death"],
+   questions:["How are my assets positioned for tax efficiency?","Am I selling things I could borrow against instead?","Is my legacy plan coordinated with my assets?","What can I apply from this at my level?"],
+   takeaway:"The wealthy minimize tax mostly by owning the right assets and rarely selling. The principles scale down.",
+   fix:"A free Financial Needs Analysis with Marimer maps your assets, protection, and legacy so your family keeps more of what you build."},
+
+  {v:"wealth",case:"W-02",cls:"Hotly debated",prod:"life",heat:4,silence:5,
+   title:"Why Wealthy Families Use Permanent Life Insurance",
+   body:"Roth IRAs cap how much you can contribute and who qualifies. Structured correctly, cash-value life insurance grows tax-deferred and can be accessed tax-free through policy loans, with no income limits and no Roth-style contribution cap.\n\nIt is not magic, and it is badly oversold by some agents to people it does not fit. Built right, it is a tool wealthier families have quietly used for generations for tax-advantaged access and a tax-free death benefit. The key word is structured, and that is where good advice matters.",
+   redflags:["Sold as a guaranteed wealth machine","No discussion of how it must be structured","Ignoring whether it actually fits you","Best-case illustrations only"],
+   questions:["Is this the right tool for my situation?","How must it be structured to work as intended?","What happens if I cannot keep funding it?","What are the alternatives?"],
+   takeaway:"Cash-value life can offer tax-advantaged growth and access, but only when it is structured correctly and genuinely fits.",
+   fix:"Marimer structures cash-value life the right way, or tells you straight when it is not right for you."},
+
+  {v:"wealth",case:"W-03",cls:"Underreported",prod:"book",heat:3,silence:5,
+   title:"The Inheritance Rule the Wealthy Plan Around",
+   body:"When you inherit assets, their cost basis steps up to the value at the date of death, so years of appreciation can pass to heirs tax-free if held until then. The wealthy build their hold, sell, and gift decisions around this rule.\n\nRegular families often sell at the wrong moment or fail to coordinate it with their insurance and beneficiaries, and lose the advantage. Planning a few steps ahead can keep more in the family and less with the IRS.",
+   redflags:["No estate or legacy plan in place","Selling inherited assets without advice","Beneficiaries and coverage not coordinated","Unaware of the step-up in basis"],
+   questions:["How does the step-up apply to my family's assets?","Should certain assets be held rather than sold?","Is my coverage coordinated with my estate plan?","Who should I be working with on this?"],
+   takeaway:"A quiet tax rule can pass decades of gains to heirs tax-free, but only with coordinated planning.",
+   fix:"Legacy planning with Marimer lines up your coverage and beneficiaries so more passes to your family, not the IRS."},
+
+  {v:"wealth",case:"W-04",cls:"Widely misunderstood",prod:"retire",heat:3,silence:5,
+   title:"Why Which Tax Bucket Your Money Lands In Matters",
+   body:"Most people focus on picking investments. The wealthy focus on which tax bucket the money lands in, because that often decides how much they actually keep. There are three: taxable, tax-deferred such as a 401(k), and tax-free such as a Roth, properly structured cash-value life, or an HSA.\n\nDrawing from the right bucket at the right time can save a great deal in retirement and avoid the surprise that tax-deferred simply means taxed later, possibly at a higher rate. Many people retire with everything in one bucket and no plan for the bill.",
+   redflags:["All retirement savings in one tax bucket","No tax-free sources planned","Assuming a lower future tax bracket","No strategy for which account to draw first"],
+   questions:["What is the mix across my three tax buckets?","Should I be building more tax-free savings?","Which account should I draw from first?","How do I plan around future tax rates?"],
+   takeaway:"It is not only what you earn, but which tax bucket it lands in. Diversifying buckets protects your retirement income.",
+   fix:"Marimer can help you build tax-free buckets, including Roth-style, cash-value life, and HSA options, so retirement income is not a tax ambush."},
+
+  // ---------------- PHARMA ADS ----------------
+  {v:"pharma",case:"P-01",cls:"Controversial",prod:"telehealth",heat:4,silence:4,
+   title:"Why Drug Ads Spend More Time on Side Effects Than Benefits",
+   body:"Smiling couple, golden retriever, a meadow, and then the voice speeds up to list risks that sound worse than what you started with. That contrast is not an accident. For years a rule let drug ads recite a quick major-risk statement and send the rest to a website or toll-free number, so the cheerful imagery carried the message while the risks were read at auctioneer speed.\n\nIn 2025 regulators moved to require fuller on-screen risk disclosure. The honest takeaway is about the ad, not the medicine: never stop a prescription over a commercial. Ask a real doctor.",
+   redflags:["Mood and imagery doing the persuading","Risks read quickly or pushed to a website","A side-effect list longer than the benefit pitch","An ad that feels designed to bypass your judgment"],
+   questions:["What is this drug actually for, and do I need it?","What are the real risks and alternatives?","Is a generic or lifestyle option worth discussing?","What does my own doctor recommend?"],
+   takeaway:"When the side-effect list outlasts the commercial, that is the ad working as designed. Decide with a doctor, not a TV spot.",
+   fix:"Phoenix telehealth gets you a licensed physician 24/7, so your questions go to a real doctor instead of a commercial."},
+
+  {v:"pharma",case:"P-02",cls:"Controversial",prod:"telehealth",heat:5,silence:4,
+   title:"Why Every Drug Ad Ends With 'Ask Your Doctor'",
+   body:"Every drug ad closes the same way: ask your doctor about it. It sounds like empowerment, but it functions as a sales funnel that ends in an exam room. The United States is one of only two countries that allow this kind of direct-to-consumer drug advertising.\n\nResearch has found that patients who ask for an advertised drug are far more likely to leave with that exact prescription, and the ad boom drove a large share of the rise in drug spending. The effect is that the viewer becomes the one nudging their own doctor toward the newest, priciest option.",
+   redflags:["An ad telling you which drug to request","Pressure to ask for something by brand name","A newest, priciest option presented as default","No mention of alternatives or generics"],
+   questions:["Is there an equally effective generic?","What are the alternatives, including non-drug options?","Why this specific medication for me?","What does the evidence actually show?"],
+   takeaway:"'Ask your doctor' is marketing language. Bring questions, not a brand name, into the exam room.",
+   fix:"Phoenix telehealth connects you with a real physician for honest answers, not a prompt planted by a TV ad."},
+
+  {v:"pharma",case:"P-03",cls:"Controversial",prod:"aca",heat:4,silence:5,
+   title:"Where Your Prescription Dollars Actually Go",
+   body:"Drug companies often say advertising budgets fund innovation. By regulators' own 2025 framing, companies can spend up to roughly a quarter of their budget on advertising, money officials argued would be better spent lowering prices.\n\nWhen a company markets a drug harder than it researches one, the advertising is not really informing you. It is a marketing cost being spread across your premiums and your pharmacy counter. Understanding that helps you read both the ad and the price tag with clearer eyes.",
+   redflags:["'Prices reflect research' with heavy ad spending","Brand drugs pushed over equivalents","Marketing costs hidden in the price","Premiums rising alongside ad budgets"],
+   questions:["Is there a lower-cost equivalent to this drug?","How can I keep my prescription costs down?","Does my plan cover a generic alternative?","What is driving my drug costs the most?"],
+   takeaway:"Heavy advertising is a cost that ends up in your premiums and at the pharmacy counter. It is worth shopping your options.",
+   fix:"Marimer compares plans to keep your drug costs sane, so a company's ad budget is not quietly on your tab."},
+];
+
+const CHAN_GUIDE = {
+  "Facebook":"warm, story-led, a little longer; community tone; soft DM call-to-action at the end",
+  "Threads/X":"punchy, one strong line then a short payoff; conversational; no hashtags spam",
+  "LinkedIn":"credible and plainspoken, lead with the stakes, professional but human, light structure",
+  "TikTok":"a spoken hook for the first 3 seconds plus a quick on-screen caption idea; energetic"
+};
+
+const VOICE = "conversational, emotionally intelligent, blunt but caring, anti-corporate, street-smart; talks like a real person who's on the regular human's side, not a brand";
+
+let state = { v:"all", s:"heat", q:"", chan:{} };
+
+const grid = document.getElementById('grid');
+const countEl = document.getElementById('count');
+
+function pips(n,kind){
+  let s='<div class="pips">';
+  for(let i=1;i<=5;i++) s+=`<span class="pip ${i<=n?'on-'+kind:''}"></span>`;
+  return s+'</div>';
+}
+function vlabel(v){return v==="health"?"Health insurance":v==="life"?"Life insurance":v==="finance"?"Personal finance":v==="wealth"?"Rich playbook":v==="pharma"?"Pharma ads":"Personal finance";}
+
+function render(){
+  const list = DATA
+    .filter(d=> state.v==="all"||d.v===state.v)
+    .filter(d=>{
+      if(!state.q) return true;
+      const blob=(d.title+d.body+d.cls+d.redflags.join(" ")+d.questions.join(" ")+d.takeaway+vlabel(d.v)).toLowerCase();
+      return blob.includes(state.q.toLowerCase());
+    })
+    .sort((a,b)=> state.s==="heat" ? b.heat-a.heat : b.silence-a.silence);
+
+  countEl.textContent = list.length+" file"+(list.length===1?"":"s");
+
+  if(!list.length){ grid.innerHTML='<div class="empty">No files match that search. Try a broader term — or clear it to see the whole dossier.</div>'; return; }
+
+  grid.innerHTML = list.map((d,i)=>{
+    const id="f"+DATA.indexOf(d);
+    const chans=Object.keys(CHAN_GUIDE).map(c=>{
+      const on = (state.chan[id]||"Facebook")===c;
+      return `<button class="chan" data-chan="${c}" data-id="${id}" aria-pressed="${on}">${c}</button>`;
+    }).join("");
+    return `
+    <article class="file" data-code="${d.case}">
+      <div class="file-head">
+        <div class="tag-row">
+          <span class="vtag ${d.v}">${vlabel(d.v)}</span>
+          <span class="caseno">DOSSIER ${d.case} · ${d.cls}</span>
+        </div>
+        <h2 class="codename">${d.title}</h2>
+      </div>
+      <div class="meters">
+        <div class="meter"><div class="meter-label"><span>🔥 Heat</span><span>${d.heat}/5</span></div>${pips(d.heat,'heat')}</div>
+        <div class="meter"><div class="meter-label"><span>🤫 How quiet</span><span>${d.silence}/5</span></div>${pips(d.silence,'silence')}</div>
+      </div>
+      <div class="file-body">
+        <div class="body">${d.body}</div>
+        <div class="sect redflags">
+          <div class="sect-k">Red flags</div>
+          <ul>${d.redflags.map(x=>`<li>${x}</li>`).join("")}</ul>
+        </div>
+        <div class="sect questions">
+          <div class="sect-k">Questions to ask</div>
+          <ul>${d.questions.map(x=>`<li>${x}</li>`).join("")}</ul>
+        </div>
+        <div class="redact-block">
+          <div class="redact-label">What consumers should know</div>
+          <div class="redact" data-open="false" tabindex="0" role="button" aria-expanded="false" aria-label="Reveal the takeaway">
+            <span class="truth">${d.takeaway}</span>
+            <span class="bar" aria-hidden="true"></span>
+          </div>
+        </div>
+        ${(()=>{const _p=phxFor(d);return `<div class="phx">
+          <div class="phx-fix"><span class="phx-fix-k">How Phoenix helps</span> ${d.fix}</div>
+          <a class="phx-cta" href="${_p.url}" target="_blank" rel="noopener">${_p.label} →</a>
+          <a class="phx-book" href="${PHX.book.url}" target="_blank" rel="noopener">or book a free consult with Marimer</a>
+        </div>`;})()}
+        <div class="ai-row">
+          <div class="chan-row" data-id="${id}">${chans}</div>
+          <button class="spin" data-id="${id}">Draft a consumer post</button>
+          <div class="ai-out" id="out-${id}" style="display:none"></div>
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+// ---- interactions ----
+document.getElementById('vchips').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b)return;
+  state.v=b.dataset.v;
+  [...e.currentTarget.children].forEach(c=>c.setAttribute('aria-pressed', c===b));
+  render();
+});
+document.getElementById('schips').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b)return;
+  state.s=b.dataset.s;
+  [...e.currentTarget.children].forEach(c=>c.setAttribute('aria-pressed', c===b));
+  render();
+});
+document.getElementById('search').addEventListener('input',e=>{state.q=e.target.value;render();});
+
+grid.addEventListener('click',e=>{
+  const r=e.target.closest('.redact');
+  if(r){ const open=r.dataset.open==="true"; r.dataset.open=!open; r.setAttribute('aria-expanded',!open); if(!open){const a=r.closest('article'); if(a) markSeen(a.dataset.code);} return; }
+  const chan=e.target.closest('.chan');
+  if(chan){
+    const id=chan.dataset.id;
+    state.chan[id]=chan.dataset.chan;
+    [...chan.parentElement.children].forEach(c=>c.setAttribute('aria-pressed', c===chan));
+    return;
+  }
+  const spin=e.target.closest('.spin');
+  if(spin){ spinHook(spin.dataset.id, spin); return; }
+  const copy=e.target.closest('.copy');
+  if(copy){
+    navigator.clipboard.writeText(copy.dataset.text).then(()=>{copy.textContent="Copied ✓";setTimeout(()=>copy.textContent="Copy",1400);});
+  }
+});
+grid.addEventListener('keydown',e=>{
+  const r=e.target.closest('.redact');
+  if(r && (e.key==="Enter"||e.key===" ")){ e.preventDefault(); const open=r.dataset.open==="true"; r.dataset.open=!open; r.setAttribute('aria-expanded',!open); if(!open){const a=r.closest('article'); if(a) markSeen(a.dataset.code);}}
+});
+
+async function spinHook(id, btn){
+  const d = DATA[parseInt(id.slice(1))];
+  const chan = state.chan[id]||"Facebook";
+  const out = document.getElementById('out-'+id);
+  out.style.display='block';
+  out.innerHTML='<span class="loading">Drafting a post for '+chan+'</span>';
+  btn.disabled=true;
+
+  const prompt = `You are a ghostwriter for Marimer Cruz-Nieves, a licensed insurance educator. Voice: ${VOICE}, but always professional and trustworthy — the credible insider, never a conspiracy theorist or someone attacking the industry.
+
+Write ONE short educational post for ${chan}. Channel style: ${CHAN_GUIDE[chan]}.
+
+Base it on this dossier:
+TITLE: ${d.title}
+SUMMARY: ${d.body}
+QUESTIONS A SMART CONSUMER ASKS: ${d.questions.join("; ")}
+KEY TAKEAWAY: ${d.takeaway}
+
+Rules:
+- Open with a specific, useful hook (a fact or a question), not hype.
+- Educate; never condemn whole product categories or attack agents. If a product can be useful, say so. Frame it as "here's what I wish consumers were told."
+- Accurate only. No legal/tax advice, no promises, not a recommendation to buy or drop anything.
+- End with a calm invitation to reach out to Phoenix Securitas with questions.
+- No hashtag spam. ${chan==="TikTok"?"Start with a 3-second spoken hook, then add an on-screen caption idea labeled CAPTION:.":""}
+Return only the post text.`;
+
+  try{
+    const res = await fetch("https://phoenixinfin.com/api/desk",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"hook",prompt})
+    });
+    const data = await res.json();
+    const text = (data.text||"").trim();
+    if(!text) throw new Error("empty");
+    out.innerHTML = text.replace(/</g,"&lt;") +
+      `<br><button class="copy" data-text="${text.replace(/"/g,'&quot;')}">Copy</button>`;
+  }catch(err){
+    out.innerHTML = "Couldn't reach the writer just now. Try again in a moment.";
+  }finally{
+    btn.disabled=false;
+  }
+}
+
+const PHX = {
+  book:      {label:"Book a free consult with Marimer", url:"https://api.zybrzeus.com/calendar/mcruznieves"},
+  life:      {label:"Explore life insurance options", url:"https://agents.ethoslife.com/invite/a5c42"},
+  aca:       {label:"Shop ACA / Marketplace plans", url:"https://www.healthsherpa.com/?_agent_id=marimer-cruz-nieves"},
+  privateh:  {label:"See private health plans", url:"https://www.enrollonehealth.com/phoenixsecuritas/home/enroll"},
+  medsupp:   {label:"Compare Medicare Supplement plans", url:"https://www.planenroll.com/?purl=Marimer-Cruz-Nieves"},
+  telehealth:{label:"Get 24/7 virtual doctor access", url:"https://brokers.careington.com/Index.aspx?A=43494334393736"},
+  retire:    {label:"Talk retirement, annuities & 401k rollover", url:"https://api.zybrzeus.com/calendar/mcruznieves"}
+};
+function phxFor(d){ return PHX[d.prod] || PHX.book; }
+
+render();
+
+// ---------- Ask the Desk: AI agent + 3-question paywall ----------
+const FREE_LIMIT  = 3;          // free questions before the paywall
+const MONTHLY_CAP = 100;        // paid plans: 100 questions / month (NOT unlimited)
+const PRICE_DAY   = "$9";       // 24-hour day pass
+const PRICE_MONTH = "$30";      // per month
+let asked = 0, busy = false, unlocked = false;
+let paidUsed = 0, tier = 'month';   // 'day' | 'month'
+let convo = [];
+
+const chatlog = document.getElementById('chatlog');
+const askbox  = document.getElementById('askbox');
+const asksend = document.getElementById('asksend');
+let qleftEl = document.getElementById('qleft');
+const clearanceEl = document.getElementById('clearance');
+const paywall = document.getElementById('paywall');
+
+const topicSummary = DATA.map(d=>`- ${d.title} (${vlabel(d.v)}): ${d.takeaway}`).join("\n");
+
+const DESK_SYSTEM = `You are "The Desk," a sharp, plain-talking insurance analyst inside a tool built by a licensed insurance educator. Voice: ${VOICE}. You explain health insurance, life insurance, and personal finance to everyday people who feel outmatched by it.
+
+How you answer:
+- Clear, concrete, short — a few tight paragraphs max. Translate every bit of jargon.
+- You're on the regular person's side. Name who profits and who pays when it's relevant.
+- Education first, never pushy — exactly like Marimer Cruz-Nieves, the licensed agent (NPN 21566471; TX, FL, OH & NY) behind Phoenix Securitas. You don't make the final personalized suitability call and you never promise coverage or outcomes. But when it's genuinely relevant, point the person to the matching Phoenix Securitas product below and offer to connect them with Marimer for a real recommendation. If a product probably isn't right for someone, say so.
+- Never invent product details, rates, or guarantees. Always note specifics depend on carrier, state, and the person's situation. For Medicare, add that she doesn't offer every plan in the area and they can contact Medicare.gov or 1-800-MEDICARE; for 401k rollovers or annuities, add that it's educational only and to consult a qualified tax professional.
+- Never invent statistics or carrier-specific facts. If you're unsure, say so plainly.
+- If a question isn't about insurance or money, answer briefly and steer back.
+
+Phoenix Securitas products you can route people to — use the exact links and have them open in a new tab:
+- Life insurance (term, whole, universal, final expense): https://agents.ethoslife.com/invite/a5c42
+- Health, ACA / Marketplace: https://www.healthsherpa.com/?_agent_id=marimer-cruz-nieves
+- Health, private plans: https://www.enrollonehealth.com/phoenixsecuritas/home/enroll
+- Medicare Supplement: https://www.planenroll.com/?purl=Marimer-Cruz-Nieves
+- Virtual doctor access / telehealth: https://brokers.careington.com/Index.aspx?A=43494334393736
+- Annuities, retirement, 401k rollover, or any general consult — book Marimer: https://api.zybrzeus.com/calendar/mcruznieves
+When you suggest one, give the link with a one-line reason, then warmly invite them to book Marimer. Low pressure, always.
+
+You also know these under-discussed controversies and can pull from them when useful:
+${topicSummary}`;
+
+function addMsg(role, text){
+  const seed = chatlog.querySelector('.seed');
+  if(seed) seed.remove();
+  const el = document.createElement('div');
+  el.className = 'msg ' + (role==='you'?'you':'desk');
+  el.innerHTML = `<div><div class="who">${role==='you'?'You':'The Desk'}</div><div class="bubble"></div></div>`;
+  el.querySelector('.bubble').textContent = text;
+  chatlog.appendChild(el);
+  chatlog.scrollTop = chatlog.scrollHeight;
+  return el;
+}
+
+async function askDesk(q){
+  if(busy) return;
+  q = (q||'').trim();
+  if(!q) return;
+  if(!unlocked && asked >= FREE_LIMIT){ showPaywall(); return; }
+  if(unlocked && paidUsed >= MONTHLY_CAP){ showCapReached(); return; }
+
+  addMsg('you', q);
+  askbox.value='';
+  convo.push({role:'user', content:q});
+  busy=true; asksend.disabled=true;
+  const thinking = addMsg('desk','');
+  thinking.querySelector('.bubble').innerHTML='<span class="loading">Reading the fine print</span>';
+
+  try{
+    const res = await fetch("https://phoenixinfin.com/api/desk",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"chat",system:DESK_SYSTEM,messages:convo})
+    });
+    if(res.status===429){
+      thinking.querySelector('.bubble').textContent="Too many requests — give it a minute and try again.";
+      busy=false; chatlog.scrollTop=chatlog.scrollHeight; return;
+    }
+    if(res.status===402){
+      thinking.remove(); busy=false; showPaywall(); return;
+    }
+    const data = await res.json();
+    const text = (data.text||"").trim() || "I couldn't pull that together — try rephrasing?";
+    thinking.querySelector('.bubble').textContent = text;
+    convo.push({role:'assistant', content:text});
+    if(unlocked){
+      paidUsed++;
+      qleftEl.textContent = Math.max(0, MONTHLY_CAP - paidUsed);
+      if(paidUsed >= MONTHLY_CAP) setTimeout(showCapReached, 700);
+    } else {
+      asked++;
+      const left = Math.max(0, FREE_LIMIT-asked);
+      qleftEl.textContent = left;
+      if(left===0) setTimeout(showPaywall, 700);
+    }
+  }catch(err){
+    thinking.querySelector('.bubble').textContent = "Couldn't reach the Desk just now. Give it a second and try again.";
+  }finally{
+    busy=false;
+    const blocked = (!unlocked && asked>=FREE_LIMIT) || (unlocked && paidUsed>=MONTHLY_CAP);
+    if(!blocked) asksend.disabled=false;
+    chatlog.scrollTop = chatlog.scrollHeight;
+  }
+}
+
+function showPaywall(){
+  paywall.classList.add('show');
+  askbox.disabled=true; asksend.disabled=true;
+}
+
+function showCapReached(){
+  askbox.disabled=true; asksend.disabled=true;
+  const pwcard=document.getElementById('pwcard');
+  pwcard.innerHTML = `<span class="pw-stamp">LIMIT REACHED</span>
+     <h3>You've used your 100 for the month.</h3>
+     <p>The meter resets next billing cycle. Need answers now? Talk to a licensed human and skip the queue.</p>
+     <button class="pw-cta" id="pwconsult2">Book a 15-min consult</button>`;
+  paywall.classList.add('show');
+  document.getElementById('pwconsult2').addEventListener('click',()=>captureLead('consult'));
+}
+
+// plan selection
+document.getElementById('pwplans').addEventListener('click',e=>{
+  const b=e.target.closest('.pw-plan'); if(!b) return;
+  tier = b.dataset.tier;
+  [...b.parentElement.children].forEach(c=>c.setAttribute('aria-pressed', c===b));
+});
+
+asksend.addEventListener('click',()=>askDesk(askbox.value));
+askbox.addEventListener('keydown',e=>{ if(e.key==='Enter') askDesk(askbox.value); });
+document.getElementById('seedchips').addEventListener('click',e=>{
+  const b=e.target.closest('.seedchip'); if(b) askDesk(b.textContent);
+});
+
+// paywall actions
+document.getElementById('pwcta').addEventListener('click',()=>captureLead('paid'));
+document.getElementById('pwconsult').addEventListener('click',()=>captureLead('consult'));
+
+async function captureLead(kind){
+  if(kind==='consult'){
+    window.open('https://api.zybrzeus.com/calendar/mcruznieves','_blank');
+    return;
+  }
+
+  const plan = tier; // 'day' | 'month'
+  const pwctaBtn = document.getElementById('pwcta');
+  if(pwctaBtn){ pwctaBtn.textContent='Redirecting to payment...'; pwctaBtn.disabled=true; }
+
+  try{
+    const statusRes = await fetch('/api/desk/status');
+    const statusData = await statusRes.json();
+
+    if(!statusData.authenticated){
+      window.location.href = 'https://phoenixinfin.com/account/login?next=' + encodeURIComponent('https://www.phoenixsecuritas.com/phoenix-rising.html');
+      return;
+    }
+
+    const createRes = await fetch('/api/desk-pay/create',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tier: plan})
+    });
+    const createData = await createRes.json();
+
+    if(createData.approval_url){
+      window.location.href = createData.approval_url;
+    } else {
+      throw new Error(createData.error || 'Payment setup failed');
+    }
+  }catch(err){
+    if(pwctaBtn){ pwctaBtn.textContent='Unlock access'; pwctaBtn.disabled=false; }
+    let w=document.getElementById('pw-warn');
+    if(!w){ w=document.createElement('p'); w.id='pw-warn'; w.style.cssText='color:var(--stamp);font-size:12px;margin:8px 0 0;font-family:IBM Plex Mono,monospace'; document.getElementById('pwform').appendChild(w); }
+    w.textContent='Payment setup failed. Please try again.';
+  }
+}
+
+// ---------- stickiness: case of the week, saved progress, email capture ----------
+const TOTAL = DATA.length;
+let seen = new Set();
+function updateProgress(){
+  const n = seen.size;
+  const t = document.getElementById('progText');
+  const f = document.getElementById('progFill');
+  if(t) t.textContent = n + ' / ' + TOTAL;
+  if(f) f.style.width = Math.round(n/TOTAL*100) + '%';
+}
+async function markSeen(code){
+  if(!code || seen.has(code)) return;
+  seen.add(code); updateProgress();
+  try{ localStorage.setItem('pr-seen', JSON.stringify([...seen])); }catch(e){}
+}
+(async()=>{
+  try{ const s=localStorage.getItem('pr-seen'); if(s) seen=new Set(JSON.parse(s)); }catch(e){}
+  updateProgress();
+  try{
+    const res=await fetch('/api/desk/status');
+    if(res.ok){
+      const d=await res.json();
+      if(d.authenticated && d.tier!=='free' && !d.expired){
+        unlocked=true; paidUsed=Math.max(0,100-d.questionsLeft);
+        clearanceEl.childNodes[0].nodeValue='Questions left: ';
+        qleftEl.textContent=d.questionsLeft;
+      }
+    }
+  }catch(e){}
+})();
+
+// case of the week — rotates on a 7-day cycle
+const weekCard = DATA[Math.floor(Date.now()/(7*864e5)) % DATA.length];
+(function(){ const el=document.getElementById('weekTitle'); if(el) el.textContent = weekCard.title; })();
+const weekBtn = document.getElementById('weekOpen');
+if(weekBtn) weekBtn.addEventListener('click',()=>{
+  state.v='all'; state.q=''; const sb=document.getElementById('search'); if(sb) sb.value='';
+  [...document.getElementById('vchips').children].forEach(c=>c.setAttribute('aria-pressed', c.dataset.v==='all'));
+  render();
+  setTimeout(()=>{
+    const art=[...document.querySelectorAll('article.file')].find(a=>a.dataset.code===weekCard.case);
+    if(art){
+      art.scrollIntoView({behavior:'smooth',block:'center'});
+      art.classList.add('flash');
+      const rd=art.querySelector('.redact');
+      if(rd){ rd.dataset.open='true'; rd.setAttribute('aria-expanded','true'); markSeen(weekCard.case); }
+      setTimeout(()=>art.classList.remove('flash'),1700);
+    }
+  },90);
+});
+
+// email capture
+const emailBtn = document.getElementById('dispEmailBtn');
+if(emailBtn) emailBtn.addEventListener('click',async()=>{
+  const box=document.getElementById('dispEmail');
+  const msg=document.getElementById('dispEmailMsg');
+  const v=(box.value||'').trim();
+  if(!/.+@.+\..+/.test(v)){ msg.textContent='Enter a valid email.'; msg.style.color='var(--stamp)'; return; }
+  msg.textContent="You're on the list — next week's file is on the way."; msg.style.color='#2E5A4F';
+  box.value='';
+});
+</script>
+</body>
+</html>
